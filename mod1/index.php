@@ -1,5 +1,5 @@
 <?php
-	
+
 /***************************************************************
  *  Copyright notice
  *
@@ -102,7 +102,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 			// Draw the header.
 			$this->doc = t3lib_div::makeInstance("noDoc");
 			$this->doc->backPath = $BACK_PATH;
-			
+
 			if (method_exists('\\TYPO3\\CMS\\Backend\\Utility\\BackendUtility', 'getModuleUrl')) {
 				$urlfirstpart =  \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('wizard_element_browser');
 			} else {
@@ -478,7 +478,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 		if (t3lib_div::_GP('action') == 'realurldefault') {
 			$filecontent = t3lib_div::getURL($this->urltoolrealurlDefaultFile);
 			$content .= $this->okPrefix . $GLOBALS['LANG']->getLL("msgRealurlDefaultLoaded") . $this->okPostfix;
-			
+
 			$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_domain', 'hidden=0');
 			$multidomaincnt = "\n\$domains = array(\n	'_DEFAULT' => '1',\n";
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($result)) {
@@ -493,7 +493,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 			$multidomaincnt .= "}" . "\n";
 			$multidomaincnt .= "?>" . "\n";
 		}
-		
+
 		// Output Form-Data
 		$content .= '<form action="index.php?id=' . $this->id . '" method="POST" name="editform">';
 		$content .= '<input type="hidden" name="action" value="saverealurlconfig" />';
@@ -600,7 +600,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 
 		$content = $this->doc->section($GLOBALS['LANG']->getLL("sectionRealurlCache"), $content, 1, 1);
 
-		// list realurl errorlog		
+		// list realurl errorlog
 		$temp = '';
 		$bgCol = '';
 
@@ -647,7 +647,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 		$temp = '';
 		$bgCol = '';
 
-		// list pages with pathsegment		
+		// list pages with pathsegment
 		$sql = "SELECT * FROM pages WHERE tx_realurl_pathsegment > '' order by uid asc ";
 		$res = $GLOBALS['TYPO3_DB']->sql_query($sql);
 
@@ -681,7 +681,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 		$content .= $this->doc->section($GLOBALS['LANG']->getLL("sectionPathsegment"), $temp, 1, 1);
 		$content .= $this->doc->spacer(10);
 
-		// list pages with alias			
+		// list pages with alias
 		$temp = '';
 		$bgCol = '';
 
