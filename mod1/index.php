@@ -34,8 +34,8 @@ unset($MCONF);
 require ("conf.php");
 require ($BACK_PATH . "init.php");
 if (floatval($TYPO3_CONF_VARS['SYS']['compat_version']) < 6.2) {
-	require ($BACK_PATH . "template.php");
-	require_once (PATH_t3lib . "class.t3lib_scbase.php");
+	if (!class_exists('template')) require ($BACK_PATH . "template.php");
+	if (!class_exists('t3lib_scbase')) require_once (PATH_t3lib . "class.t3lib_scbase.php");
 }
 $GLOBALS['LANG']->includeLLFile("EXT:dix_urltool/mod1/locallang.xml");
 $BE_USER->modAccess($MCONF, 1); // This checks permissions and exits if the users has no permission for entry.
@@ -100,7 +100,7 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 		if (($this->id && $access) || ($BE_USER->user["admin"] && !$this->id)) {
 
 			// Draw the header.
-			$this->doc = t3lib_div::makeInstance("noDoc");
+			$this->doc = t3lib_div::makeInstance("template");
 			$this->doc->backPath = $BACK_PATH;
 
 			if (method_exists('\\TYPO3\\CMS\\Backend\\Utility\\BackendUtility', 'getModuleUrl')) {
@@ -560,8 +560,8 @@ class tx_dixurltool_module1 extends t3lib_SCbase {
 
 			// Clear FE-Cache
 			if (t3lib_div::_GP('urltool_clear_fe') == 'on') {
-				$GLOBALS['typo3CacheManager']->getCache('cache_pages')->flush();
-				$GLOBALS['typo3CacheManager']->getCache('cache_pagesection')->flush();
+				t3lib_div::makeInstance('t3lib_cache_Manager')->getCache('cache_pages')->flush();
+				t3lib_div::makeInstance('t3lib_cache_Manager')->getCache('cache_pagesection')->flush();
 				# $GLOBALS['TYPO3_DB']->exec_TRUNCATEquery('cache_pages');
 				# $GLOBALS['TYPO3_DB']->exec_TRUNCATEquery('cache_pagesection');
 			}
